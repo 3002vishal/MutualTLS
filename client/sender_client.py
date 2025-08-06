@@ -5,7 +5,7 @@ import socket
 context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
 
 # Load CLIENT cert and private key
-context.load_cert_chain(certfile="client.crt", keyfile="client.key.pem")
+context.load_cert_chain(certfile="client.crt", keyfile="client.key")
 
 # Load CA that signed SERVER cert
 context.load_verify_locations(cafile="../ca/intermediate/ca-chain.pem")

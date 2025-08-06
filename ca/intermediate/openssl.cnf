@@ -2,7 +2,7 @@
 default_ca = CA_default
 
 [ CA_default ]
-dir               = .  
+dir               = .
 certs             = $dir/certs
 crl_dir           = $dir/crl
 new_certs_dir     = $dir/newcerts
@@ -14,29 +14,31 @@ default_md        = sha256
 policy            = policy_loose
 email_in_dn       = no
 copy_extensions   = copy
-x509_extensions   = v3_intermediate_ca
-default_days        = 3650  
+x509_extensions   = usr_cert   # ← Default for user certs (can override during signing)
+default_days      = 3650
 
 [ policy_loose ]
 countryName             = optional
 stateOrProvinceName     = optional
 organizationName        = optional
-commonName              = optional
+organizationalUnitName  = optional
+commonName              = supplied  # ← Make CN mandatory for identity
+emailAddress            = optional
 
 [ req ]
 default_bits        = 4096
 prompt              = no
 default_md          = sha256
-distinguished_name  = dn
+distinguished_name  = req_distinguished_name
 x509_extensions     = v3_intermediate_ca
 
-[ dn ]
+[ req_distinguished_name ]
 C  = IN
 ST = Bihar
 L  = Patna
 O  = DemoOrg
-OU = IntermediateCA
-CN = Demo Intermediate CA
+OU = DemoUnit
+CN = Demo Common Name   # ← This should be overridden for each cert via -subj or custom file
 
 [ v3_intermediate_ca ]
 basicConstraints = critical, CA:true, pathlen:0
@@ -52,7 +54,7 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 keyUsage = critical, digitalSignature, keyEncipherment
 extendedKeyUsage = clientAuth
-  
+
 [ server_cert ]
 basicConstraints = CA:FALSE
 nsCertType = server
