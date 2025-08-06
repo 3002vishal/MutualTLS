@@ -1,18 +1,18 @@
-# sender_client.py
 import ssl
 import socket
 
+# Create context to verify SERVER identity
 context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
 
-# Load client cert and key (this is the CLIENT identity)
+# Load CLIENT cert and private key
 context.load_cert_chain(certfile="client.crt", keyfile="client.key.pem")
 
-# Load CA chain to verify SERVER cert
+# Load CA that signed SERVER cert
 context.load_verify_locations(cafile="../ca/intermediate/ca-chain.pem")
 
-# Enforce mutual TLS
+# Enforce verification
 context.verify_mode = ssl.CERT_REQUIRED
-context.check_hostname = False  # Only disable if testing locally
+context.check_hostname = False  # Disable only for localhost
 
 with socket.create_connection(('localhost', 8443)) as sock:
     with context.wrap_socket(sock, server_hostname="DemoServer") as ssock:
