@@ -1,0 +1,45 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir               = .  # Root CA directory
+certs             = $dir/certs
+crl_dir           = $dir/crl
+new_certs_dir     = $dir/newcerts
+database          = $dir/index.txt
+serial            = $dir/serial
+private_key       = $dir/private/root.key
+certificate       = $dir/certs/root.crt
+default_md        = sha256
+policy            = policy_strict
+email_in_dn       = no
+copy_extensions   = copy
+x509_extensions   = v3_ca
+default_days        = 3650  
+
+[ policy_strict ]
+countryName             = match
+stateOrProvinceName     = match
+organizationName        = match
+commonName              = supplied
+
+[ req ]
+default_bits       = 4096
+prompt             = no
+default_md         = sha256
+distinguished_name = dn
+x509_extensions    = v3_ca
+
+[ dn ]
+C  = IN
+ST = Bihar
+L  = Patna
+O  = DemoOrg
+OU = RootCA
+CN = Demo Root CA
+
+[ v3_ca ]
+basicConstraints = critical, CA:true
+keyUsage = critical, keyCertSign, cRLSign
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
