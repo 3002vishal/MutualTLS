@@ -46,9 +46,9 @@ keyUsage = critical, digitalSignature, cRLSign, keyCertSign
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always,issuer
 
-[ usr_cert ]
+[ client_cert ]
 basicConstraints = CA:FALSE
-nsCertType = client, email
+nsCertType = client
 nsComment = "OpenSSL Generated Client Certificate"
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
@@ -63,3 +63,13 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 keyUsage = critical, digitalSignature, keyEncipherment
 extendedKeyUsage = serverAuth
+
+[ usr_cert ]
+basicConstraints = CA:FALSE
+nsCertType = client, server
+nsComment = "OpenSSL Generated Certificate"
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth, serverAuth
+
